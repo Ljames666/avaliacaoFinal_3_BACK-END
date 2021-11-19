@@ -7,3 +7,5 @@ userList.push(admin);
 
 const adminMessage: UserMessage = new UserMessage("1", "teste", "funciona o back-end");
 userList[0].message.push(adminMessage);
+
+export { userList };
