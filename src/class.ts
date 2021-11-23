@@ -1,10 +1,10 @@
 interface Message {
-  id: string;
+  id: number;
   description: string;
   details: string;
 }
 interface Person {
-  id: string;
+  id: number;
   name: string;
   email: string;
   password: string;
@@ -12,12 +12,12 @@ interface Person {
 }
 
 class UserMessage implements Message {
-  constructor(public id: string, public description: string, public details: string) {}
+  constructor(public id: number, public description: string, public details: string) {}
 }
 
 class User implements Person {
   constructor(
-    public id: string,
+    public id: number,
     public name: string,
     public email: string,
     public password: string,
