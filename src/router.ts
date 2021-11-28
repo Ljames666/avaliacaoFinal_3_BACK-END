@@ -7,8 +7,9 @@ import {
   updateMessage,
   deleteMessage,
 } from "./functions";
+import { validateLogin } from "./middlewares";
 let router = Router();
-
+router.use("/login", validateLogin);
 router.post("/cadastro", (req: Request, res: Response) => {
   createUser(req, res);
 });

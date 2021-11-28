@@ -3,7 +3,7 @@ import { customAlphabet } from "nanoid";
 import { UserMessage, User } from "./class";
 import { userList } from "./arrays";
 
-require("dotenv-safe").config();
+require("dotenv").config("KEY");
 let uId = 1;
 let createUser = (req: Request, res: Response) => {
   let { name, email, password, reppeatPassword } = req.body;
@@ -22,20 +22,20 @@ let login = (req: Request, res: Response) => {
   let { name, password } = req.body;
 
   const id = userList.findIndex((user) => user.name == name && user.password == password);
-  if (id > 0) {
+  if (id >= 0) {
     let userLogon = {
       name: userList[id].name,
       email: userList[id].email,
       id: userList[id].id,
     };
-    const alphabet =
-      '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-"!@#$%¨&*()=+^?/°<>|αβΓγΔδεηΘθιλμξΠπΣστΦφχΨψΩω';
+    const alphabet: any = process.env.KEY;
+    // '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-"!@#$%¨&*()=+^?/°<>|αβΓγΔδεηΘθιλμξΠπΣστΦφχΨψΩω';
     const nanoid = customAlphabet(alphabet, 21);
 
     const token = nanoid();
     return res.status(200).send({ userLogon, token });
   } else {
-    return res.status(404);
+    return res.status(404).send();
   }
 };
 let messageId: number = 1;
@@ -43,7 +43,7 @@ let createMessage = (req: Request, res: Response) => {
   const userId = Number(req.params.userId);
   let { description, details } = req.body;
   const id = userList.findIndex((user) => user.id == userId);
-  if (id > 0) {
+  if (id >= 0) {
     let newMessage = new UserMessage(messageId, description, details);
     userList[id].message.push(newMessage);
     messageId++;
@@ -56,7 +56,7 @@ let createMessage = (req: Request, res: Response) => {
 let readMessage = (req: Request, res: Response) => {
   const userId = Number(req.params.userId);
   const id = userList.findIndex((user) => user.id == userId);
-  if (id > 0) {
+  if (id >= 0) {
     res.status(200).send({
       message: `Mr. ${userList[id].name} these are your messages:`,
       messages: userList[id].message,
@@ -73,14 +73,14 @@ let updateMessage = (req: Request, res: Response) => {
   let { description, details } = req.body;
   const mId = userList[id].message.findIndex((message) => message.id == messageId);
 
-  if (id > 0 && mId > 0) {
+  if (id >= 0 && mId >= 0) {
     userList[id].message[mId].description = description;
     userList[id].message[mId].details = details;
 
     res.status(200).send({
       User: userList[id].name,
       Message: userList[id].message[mId],
-      message: "Message successfully modified!",
+      message: `Mr. ${userList[id].name} your message successfully modified!`,
     });
   } else {
     res.status(404).send({ message: "Not found!" });
@@ -94,9 +94,11 @@ let deleteMessage = (req: Request, res: Response) => {
 
   const mId = userList[id].message.findIndex((message) => message.id === messageId);
 
-  if (id > 0) {
+  if (id >= 0) {
     userList[id].message.splice(mId, 1);
-    res.status(200).send({ message: `Mr. ${userList[id].name} message was deleted successfully` });
+    res
+      .status(200)
+      .send({ message: `Mr. ${userList[id].name} your message was deleted successfully` });
   } else {
     res.status(404).send({ message: "Not found!" });
   }
