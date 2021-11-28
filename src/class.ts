@@ -5,6 +5,7 @@ interface Message {
 }
 interface Person {
   id: number;
+  token: string;
   name: string;
   email: string;
   password: string;
@@ -18,6 +19,7 @@ class UserMessage implements Message {
 class User implements Person {
   constructor(
     public id: number,
+    public token: string,
     public name: string,
     public email: string,
     public password: string,

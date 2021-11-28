@@ -15,12 +15,25 @@ let validateLogin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-// function verifyJWT(req: Request, res: Response, next: NextFunction) {
-//   const token = req.headers.token;
+let requestProprietary = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.headers);
 
-//   if (!token) return res.status(401).json({ auth: false, message: "No token provided." });
+  console.log(req.method);
+  console.log(req.path);
+  console.log(req.protocol);
+  console.log(res.charset);
+  next();
+};
+function verifyToken(req: Request, res: Response, next: NextFunction) {
+  const token = req.headers["authorization"];
+  console.log(token);
+  const authorization = userList.findIndex((user) => user.token === token);
+  if (!token) {
+    return res.status(401).send({ message: "No token provided." });
+  } else if (authorization < 0) {
+    return res.status(401).send({ message: "Unauthenticated." });
+  }
+  next();
+}
 
-//   next();
-// }
-
-export { validateLogin };
+export { validateLogin, requestProprietary, verifyToken };

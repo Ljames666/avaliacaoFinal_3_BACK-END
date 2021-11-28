@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { Response, Request, json } from "express";
 import { customAlphabet } from "nanoid";
 import { UserMessage, User } from "./class";
 import { userList } from "./arrays";
@@ -8,11 +8,12 @@ let uId = 1;
 let createUser = (req: Request, res: Response) => {
   let { name, email, password, reppeatPassword } = req.body;
   if (password === reppeatPassword) {
+    const token = "";
     let messagesList: Array<UserMessage> = [];
-    const user: User = new User(uId, name, email, password, messagesList);
+    const user: User = new User(uId, token, name, email, password, messagesList);
     userList.push(user);
     uId++;
-    return res.status(200).send({ user, userList });
+    return res.status(201).send({ user, userList });
   } else {
     return res.status(418).send({ message: "Senhas não conferem!" });
   }
@@ -29,11 +30,13 @@ let login = (req: Request, res: Response) => {
       id: userList[id].id,
     };
     const alphabet: any = process.env.KEY;
-    // '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-"!@#$%¨&*()=+^?/°<>|αβΓγΔδεηΘθιλμξΠπΣστΦφχΨψΩω';
+
     const nanoid = customAlphabet(alphabet, 21);
 
-    const token = nanoid();
-    return res.status(200).send({ userLogon, token });
+    const token: string = nanoid();
+    userList[id].token = token;
+
+    return res.status(201).send({ userLogon, token });
   } else {
     return res.status(404).send();
   }
@@ -47,7 +50,7 @@ let createMessage = (req: Request, res: Response) => {
     let newMessage = new UserMessage(messageId, description, details);
     userList[id].message.push(newMessage);
     messageId++;
-    res.status(200).send({ message: "success", newMessage, user: userList[id] });
+    res.status(201).send({ message: "success", newMessage, user: userList[id] });
   } else {
     res.status(404).send({ message: "Not found" });
   }
