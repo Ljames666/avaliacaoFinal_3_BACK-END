@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import { userList } from "./arrays";
 import {
   createUser,
   login,
@@ -13,7 +14,7 @@ router.use(requestProprietary);
 router.use("/cadastro", validateUser);
 router.use("/login", validateLogin);
 router.get("/", (req: Request, res: Response) => {
-  res.render;
+  res.send({ user: userList });
 });
 router.post("/cadastro", (req: Request, res: Response) => {
   createUser(req, res);
