@@ -1,4 +1,4 @@
-import { Response, Request, json } from "express";
+import { Response, Request } from "express";
 import { customAlphabet } from "nanoid";
 import { UserMessage, User } from "./class";
 import { userList } from "./arrays";
@@ -6,11 +6,11 @@ import { userList } from "./arrays";
 require("dotenv").config("KEY");
 let uId = 1;
 let createUser = (req: Request, res: Response) => {
-  let { name, email, password, reppeatPassword } = req.body;
+  let { name, username, email, password, reppeatPassword } = req.body;
   if (password === reppeatPassword) {
     const token = "";
     let messagesList: Array<UserMessage> = [];
-    const user: User = new User(uId, token, name, email, password, messagesList);
+    const user: User = new User(uId, token, name, username, email, password, messagesList);
     userList.push(user);
     uId++;
     return res.status(201).send({ user, userList });
@@ -20,14 +20,13 @@ let createUser = (req: Request, res: Response) => {
 };
 
 let login = (req: Request, res: Response) => {
-  let { name, password } = req.body;
+  let { username, password } = req.body;
 
-  const id = userList.findIndex((user) => user.name == name && user.password == password);
+  const id = userList.findIndex((user) => user.username == username && user.password == password);
   if (id >= 0) {
     let userLogon = {
-      name: userList[id].name,
-      email: userList[id].email,
       id: userList[id].id,
+      username: userList[id].username,
     };
     const alphabet: any = process.env.KEY;
 

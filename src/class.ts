@@ -7,6 +7,7 @@ interface Person {
   id: number;
   token: string;
   name: string;
+  username: string;
   email: string;
   password: string;
   message: Array<Message>;
@@ -21,6 +22,7 @@ class User implements Person {
     public id: number,
     public token: string,
     public name: string,
+    public username: string,
     public email: string,
     public password: string,
     public message: Array<UserMessage>

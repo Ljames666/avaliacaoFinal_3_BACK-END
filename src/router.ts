@@ -7,11 +7,11 @@ import {
   updateMessage,
   deleteMessage,
 } from "./functions";
-import { validateLogin, requestProprietary, verifyToken } from "./middlewares";
+import { validateLogin, requestProprietary, verifyToken, validateUser } from "./middlewares";
 let router = Router();
 router.use(requestProprietary);
+router.use("/cadastro", validateUser);
 router.use("/login", validateLogin);
-router.use("/messages", verifyToken);
 router.post("/cadastro", (req: Request, res: Response) => {
   createUser(req, res);
 });
@@ -23,6 +23,7 @@ router.get("/logout", function (req: Request, res: Response) {
   res.status(200).send({ token: null });
 });
 
+router.use("/messages", verifyToken);
 router.post("/messages/:userId", (req: Request, res: Response) => {
   createMessage(req, res);
 });

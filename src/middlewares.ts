@@ -3,12 +3,12 @@ import { userList } from "./arrays";
 
 let validateLogin = (req: Request, res: Response, next: NextFunction) => {
   const pass = userList.findIndex((user) => user.password === req.body.password);
-  const name = userList.findIndex((user) => user.name === req.body.name);
+  const username = userList.findIndex((user) => user.username === req.body.username);
   if (!req.body.name || !req.body.password) {
     res.status(418).send();
-  } else if (pass < 0 && name >= 0) {
+  } else if (pass < 0 && username >= 0) {
     res.status(400).send();
-  } else if (name < 0 && pass >= 0) {
+  } else if (username < 0 && pass >= 0) {
     res.status(406).send();
   }
 
@@ -36,4 +36,20 @@ function verifyToken(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-export { validateLogin, requestProprietary, verifyToken };
+let validateUser = (req: Request, res: Response, next: NextFunction) => {
+  const username = userList.findIndex((user) => user.username === req.body.username);
+  if (
+    !req.body.name ||
+    !req.body.username ||
+    !req.body.email ||
+    !req.body.password ||
+    !req.body.reppeatPassword
+  ) {
+    return res.status(418).send();
+  } else if (username >= 0) {
+    return res.status(400).send();
+  }
+  next();
+};
+
+export { validateLogin, requestProprietary, verifyToken, validateUser };
