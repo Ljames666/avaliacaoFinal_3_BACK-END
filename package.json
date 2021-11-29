@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "postinstall": "npx tsc",
-    "start": " node ./dist/main.js "
+    "start": " node ./dist/server.js "
   },
   "author": "Jamerson Paz",
   "license": "ISC",
