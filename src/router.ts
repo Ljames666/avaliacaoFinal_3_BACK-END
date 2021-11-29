@@ -12,6 +12,9 @@ let router = Router();
 router.use(requestProprietary);
 router.use("/cadastro", validateUser);
 router.use("/login", validateLogin);
+router.get("/", (req: Request, res: Response) => {
+  res.render;
+});
 router.post("/cadastro", (req: Request, res: Response) => {
   createUser(req, res);
 });
