@@ -4,7 +4,7 @@ import { userList } from "./arrays";
 let validateLogin = (req: Request, res: Response, next: NextFunction) => {
   const pass = userList.findIndex((user) => user.password === req.body.password);
   const username = userList.findIndex((user) => user.username === req.body.username);
-  if (!req.body.name || !req.body.password) {
+  if (!req.body.username || !req.body.password) {
     res.status(418).send();
   } else if (pass < 0 && username >= 0) {
     res.status(400).send();
