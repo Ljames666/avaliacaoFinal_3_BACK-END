@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { requestProprietary, verifyToken } from "../../../../core/infra/Middlewares/middlewares";
+import { requestProprietary } from "../../../../core/infra/Middlewares/middlewares";
+import { verifyToken } from "../../infra/middlewares/verifyToken";
 
 import { CreateMessageController } from "../controllers/CreateMessageController";
 import { DeleteMessageController } from "../controllers/DeleteMessageController";
@@ -12,7 +13,8 @@ import { UpdateMessageController } from "../controllers/UpdateMessageController"
 const routerMessages = Router();
 // routerMessages.get("/messages", new GetMessagesController().handle);     //controle do admin algo futuro no app
 
-routerMessages.use(requestProprietary, verifyToken);
+routerMessages.use(requestProprietary);
+routerMessages.use("/messages", verifyToken);
 
 routerMessages.post("/messages/:userId", new CreateMessageController().handle);
 

@@ -7,7 +7,6 @@ export class CreateUserController implements Controller {
     try {
       const { name, username, email, password, reppeatPassword } = req.body;
       const service = new CreateUserService();
-      console.log(service);
 
       const newService = await service.execute({
         name,

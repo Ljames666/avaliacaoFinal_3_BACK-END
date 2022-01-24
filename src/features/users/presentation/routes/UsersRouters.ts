@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { requestProprietary, validateUser } from "../../../../core/infra/Middlewares/middlewares";
+import { requestProprietary } from "../../../../core/infra/Middlewares/middlewares";
+import { validateUser } from "../../infra/middlewares/validateUser";
 
 import { CreateUserController } from "../controllers/CreateUserController";
 import { DeleteUserController } from "../controllers/DeleteUserController";

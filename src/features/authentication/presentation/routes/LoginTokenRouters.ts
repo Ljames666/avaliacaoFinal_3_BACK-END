@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { requestProprietary, validateLogin } from "../../../../core/infra/Middlewares/middlewares";
+import { requestProprietary } from "../../../../core/infra/Middlewares/middlewares";
+import { validateLogin } from "../../infra/middlewares/validateLogin";
 
 import { GetTokenController } from "../controllers/GetTokenController";
 import { LoginController } from "../controllers/LoginController";

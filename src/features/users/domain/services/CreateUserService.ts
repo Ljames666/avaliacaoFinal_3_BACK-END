@@ -7,7 +7,6 @@ export class CreateUserService implements IService {
   async execute({ name, username, email, password, reppeatPassword }: UserCreateRequest) {
     try {
       const repository = new UserRepository();
-      console.log(repository);
 
       if (password !== reppeatPassword) {
         throw new Error(`Passwords don't match!`);
@@ -18,7 +17,6 @@ export class CreateUserService implements IService {
       }
 
       const user = await repository.create({ name, username, email, password });
-      console.log(user);
 
       return user;
     } catch (error) {
