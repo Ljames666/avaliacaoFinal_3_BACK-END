@@ -1,3 +1,4 @@
+require("dotenv/config");
 module.exports = {
   type: "postgres",
   url: process.env.DATABASE_URL,
@@ -6,8 +7,8 @@ module.exports = {
   entities: [process.env.ENTITY], //trocar para dist antes do deploy
   migrations: [process.env.MIGRATION], //trocar para dist antes do deploy
   cli: {
-    entitiesDir: "src/models", //trocar para dist antes do deploy
-    migrationsDir: "src/database/migrations", //trocar para dist antes do deploy
+    entitiesDir: "src/core/infra/database/models", //trocar para dist antes do deploy
+    migrationsDir: "src/core/infra/database/migrations", //trocar para dist antes do deploy
   },
   subscribers: [],
 
