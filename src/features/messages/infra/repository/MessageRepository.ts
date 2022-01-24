@@ -11,7 +11,7 @@ export class MessageRepository {
   }
 
   async messageCreate({ description, details, user_id }: IMessage) {
-    const descFind = await this.repository.findOne({ where: { description } });
+    const descFind = await this.repository.findOne({ where: { description, user_id } });
     console.log(descFind);
 
     if (descFind) {
