@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "typeorm": "ts-node-dev --respawn --transpile-only ./node_modules/typeorm/cli.js",
-    "postinstall": "npx tsc && npm run typeorm migration:run",
+    "postinstall": "npx tsc",
     "start": "node ./dist/server.js"
   },
   "repository": {
