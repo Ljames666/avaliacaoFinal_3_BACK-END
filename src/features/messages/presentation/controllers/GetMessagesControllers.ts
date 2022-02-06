@@ -6,10 +6,10 @@ import {
 } from "../../domain/services/GetMessagesServices";
 
 export class GetMessagesController implements Controller {
+  constructor(private service: GetMessagesService) {}
   async handle(req: Request, res: Response) {
     try {
-      const service = new GetMessagesService();
-      const serviceGet = await service.execute();
+      const serviceGet = await this.service.execute();
       return res.status(200).json(serviceGet);
     } catch (error) {
       return res.status(400).send(error);
@@ -18,11 +18,12 @@ export class GetMessagesController implements Controller {
 }
 
 export class GetMessageByIdController implements Controller {
+  constructor(private service: GetMessageByIdService) {}
   async handle(req: Request, res: Response) {
     try {
       const user_id = req.params.userId;
-      const service = new GetMessageByIdService();
-      const serviceGetById = await service.execute(user_id);
+
+      const serviceGetById = await this.service.execute(user_id);
       return res.status(200).json(serviceGetById);
     } catch (error) {
       return res.status(400).send(error);

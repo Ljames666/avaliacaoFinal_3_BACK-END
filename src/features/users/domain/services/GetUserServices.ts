@@ -2,10 +2,10 @@ import { IService } from "../../../../core/domain/interface/IService";
 import { UserRepository } from "../../infra/repository/UserRepository";
 
 export class GetUsersService implements IService {
+  constructor(private repository: UserRepository) {}
   async execute() {
     try {
-      const repository = new UserRepository();
-      const users = await repository.getAll();
+      const users = await this.repository.getAll();
 
       if (!users) throw new Error("No users");
 
@@ -16,10 +16,10 @@ export class GetUsersService implements IService {
   }
 }
 export class GetUserByIdService implements IService {
+  constructor(private repository: UserRepository) {}
   async execute(id: string) {
     try {
-      const repository = new UserRepository();
-      const user = await repository.getById(id);
+      const user = await this.repository.getById(id);
 
       if (!user) throw new Error("No user");
 

@@ -1,12 +1,13 @@
-import { Equal, getRepository, Repository } from "typeorm";
+import { Repository } from "typeorm";
+import { DatabaseConnection } from "../../../../core/infra/database/connection/connection";
 import { TableUsers } from "../../../../core/infra/database/models/TableUsers";
 import { IUser } from "../../domain/interface/IUser";
 import { UserToTokenRequest } from "../../domain/interface/UserToTokenRequest";
 
 export class UserRepository {
-  private repository: Repository<TableUsers>;
+  private readonly repository: Repository<TableUsers>;
   constructor() {
-    this.repository = getRepository(TableUsers);
+    this.repository = DatabaseConnection.dbConnection().getRepository(TableUsers);
   }
 
   async create(user: IUser) {
@@ -30,13 +31,7 @@ export class UserRepository {
     return thisUser;
   }
 
-  async upDate(data: IUser) {
-    const user = await this.repository.findOne(data.id);
-
-    if (!user) {
-      throw new Error(`user does not exist`);
-    }
-
+  async upDate(user: any, data: IUser) {
     user.name = data.name ? data.name : user.name;
     user.username = data.username ? data.username : user.username;
     user.email = data.email ? data.email : user.email;
@@ -47,10 +42,6 @@ export class UserRepository {
   }
 
   async delete(id: string) {
-    const user = await this.repository.findOne(id);
-
-    if (!user) throw new Error("User does not exist");
-
     return await this.repository.delete(id);
   }
 
@@ -62,19 +53,14 @@ export class UserRepository {
   }
 
   async bindUserToToken(data: UserToTokenRequest) {
-    const thisUser = await this.repository.find({
+    const thisUser = await this.repository.findOne({
       where: {
         username: data.username,
         password: data.password,
       },
     });
 
-    if (!thisUser) throw new Error("not found!");
-
-    let user = thisUser.findIndex(
-      (item) => item.username == data.username && item.password == data.password
-    );
-    const userToToken = { userLogon: thisUser[user].username, user_id: thisUser[user].id };
+    const userToToken = { userLogon: thisUser.username, user_id: thisUser.id };
 
     return userToToken;
   }

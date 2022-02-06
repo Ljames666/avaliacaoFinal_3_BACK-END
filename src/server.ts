@@ -1,20 +1,13 @@
 import "reflect-metadata";
-import express from "express";
-import cors from "cors";
-import { initConnection } from "./core/infra/database/connection/connection";
-import { router } from "./features/authentication/presentation/routes/LoginTokenRouters";
-import { routerMessages } from "./features/messages/presentation/routes/MessagesRouters";
-import { routerUsers } from "./features/users/presentation/routes/UsersRouters";
+import { DatabaseConnection } from "./core/infra/database/connection/connection";
+import { RedisConnection } from "./core/infra/database/connection/redis-connection";
+import { initServer } from "./core/presentation/init-server";
 
-const app = express();
-const port = process.env.PORT || 8081;
-
-initConnection()
+DatabaseConnection.serverConnection()
   .then(() => {
-    app.use(express.json(), cors(), routerUsers, routerMessages, router);
-    app.listen(port, () => console.log("Starter server..."));
+    RedisConnection.initConnection();
+    initServer();
   })
-  .catch((err) => {
-    console.log("erro na comunicação com DB");
-    console.log({ err });
+  .catch((error) => {
+    console.log(error);
   });

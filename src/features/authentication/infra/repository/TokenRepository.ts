@@ -1,4 +1,5 @@
-import { Equal, getRepository, Repository } from "typeorm";
+import { Equal, Repository } from "typeorm";
+import { DatabaseConnection } from "../../../../core/infra/database/connection/connection";
 import { TableToken } from "../../../../core/infra/database/models/TableToken";
 import { IToken } from "../../domain/interface/IToken";
 
@@ -6,7 +7,7 @@ export class TokenRepository {
   private repository: Repository<TableToken>;
 
   constructor() {
-    this.repository = getRepository(TableToken);
+    this.repository = DatabaseConnection.dbConnection().getRepository(TableToken);
   }
 
   async tokenCreate({ userLogon, user_id }: IToken) {
@@ -16,24 +17,20 @@ export class TokenRepository {
   }
 
   async tokenGet(id: string) {
-    const token = await this.repository.find({
+    const token = await this.repository.findOne({
       where: {
         user_id: Equal(id),
       },
     });
 
-    if (!token) {
-      throw new Error(`Authorization is denied for ${id}`);
-    }
-
     return token;
   }
 
-  async tokenDelete(id: string) {
-    if (!(await this.repository.findOne(id))) {
-      return new Error("User logoff");
-    }
+  async findOneToken(id: string) {
+    return await this.repository.findOne(id);
+  }
 
+  async tokenDelete(id: string) {
     await this.repository.delete(id);
   }
 }

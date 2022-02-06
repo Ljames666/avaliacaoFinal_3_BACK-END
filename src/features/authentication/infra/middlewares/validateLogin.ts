@@ -4,7 +4,6 @@ import { TableUsers } from "../../../../core/infra/database/models/TableUsers";
 
 export const validateLogin = async (req: Request, res: Response, next: NextFunction) => {
   const repo = getRepository(TableUsers);
-  console.log(req.body);
 
   const user = await repo.find({
     where: { username: Equal(req.body.username) },
@@ -13,10 +12,8 @@ export const validateLogin = async (req: Request, res: Response, next: NextFunct
     where: { password: Equal(req.body.password) },
   });
   const pass = userPass.findIndex((item) => item.password === req.body.password);
-  console.log(pass);
 
   const username = user.findIndex((item) => item.username === req.body.username);
-  console.log(username);
 
   if (!req.body.username || !req.body.password) {
     res.status(418);

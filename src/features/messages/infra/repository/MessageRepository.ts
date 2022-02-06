@@ -1,4 +1,5 @@
-import { getRepository, Repository } from "typeorm";
+import { Repository } from "typeorm";
+import { DatabaseConnection } from "../../../../core/infra/database/connection/connection";
 import { TableMessages } from "../../../../core/infra/database/models/TableMessages";
 import { IMessage } from "../../domain/interfaces/IMessage";
 import { IMessageUpdateRequest } from "../../domain/interfaces/IMessageUpdateRequest";
@@ -7,12 +8,11 @@ export class MessageRepository {
   private repository: Repository<TableMessages>;
 
   constructor() {
-    this.repository = getRepository(TableMessages);
+    this.repository = DatabaseConnection.dbConnection().getRepository(TableMessages);
   }
 
   async messageCreate({ description, details, user_id }: IMessage) {
     const descFind = await this.repository.findOne({ where: { description, user_id } });
-    console.log(descFind);
 
     if (descFind) {
       throw new Error(`Message already exists`);
@@ -29,6 +29,10 @@ export class MessageRepository {
     });
 
     return messages;
+  }
+
+  async findOneMessage(data: any) {
+    return await this.repository.findOne(data);
   }
 
   async messageFindById(user_id: string) {
