@@ -1,5 +1,5 @@
-import redis, { Redis } from "ioredis";
-require("dotenv/config");
+import redis, { Redis } from 'ioredis';
+require('dotenv/config');
 
 export class RedisConnection {
   private static _connection: Redis;
@@ -11,9 +11,15 @@ export class RedisConnection {
 
   static getConnection() {
     if (!this._connection) {
-      throw new Error("Redisnot connection!");
+      throw new Error('Redisnot connection!');
     }
 
     return this._connection;
+  }
+
+  static async closeConnection() {
+    if (this._connection) {
+      await this._connection.quit();
+    }
   }
 }
