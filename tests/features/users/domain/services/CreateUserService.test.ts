@@ -1,6 +1,7 @@
 import { UserRepository } from '../../../../../src/features/users/infra/repository/UserRepository';
 import { CreateUserService } from '../../../../../src/features/users/domain/services/CreateUserService';
 import { DatabaseConnection } from '../../../../../src/core/infra/database/connection/connection';
+import { v4 } from 'uuid';
 describe('create user service test', () => {
   jest.mock('../../../../../src/features/users/infra/repository/UserRepository');
 
@@ -20,7 +21,7 @@ describe('create user service test', () => {
     const sut = makeSut();
 
     const user = {
-      name: 'teste324',
+      name: `${v4()}`,
       username: 'joy32',
       email: 'joy32@teste.com',
       password: '234',
