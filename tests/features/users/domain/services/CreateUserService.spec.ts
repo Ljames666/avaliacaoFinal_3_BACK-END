@@ -9,6 +9,18 @@ describe('create user service test', () => {
     const sut = new CreateUserService(repository);
     return sut;
   };
+  const makeUser = async () => {
+    const user = {
+      name: 'teste',
+      username: 'joy',
+      email: 'joy@teste.com',
+      password: '123',
+    };
+    const repo = new UserRepository();
+
+    const newUser = await repo.create(user);
+    return newUser;
+  };
 
   beforeAll(async () => await DatabaseConnection.serverConnection());
 
@@ -18,6 +30,7 @@ describe('create user service test', () => {
 
   test('should return error if password and repeated password do not match', async () => {
     const sut = makeSut();
+
     expect.assertions(2);
 
     try {
@@ -34,18 +47,6 @@ describe('create user service test', () => {
       expect(err.message).toEqual(`Passwords don't match!`);
     }
   });
-
-  const makeUser = async () => {
-    const user = {
-      name: 'teste',
-      username: 'joy',
-      email: 'joy@teste.com',
-      password: '123',
-    };
-
-    const newUser = await new UserRepository().create(user);
-    return newUser;
-  };
 
   test('should return error if it has the same name', async () => {
     jest.spyOn(UserRepository.prototype, 'findOne').mockResolvedValue(makeUser());
