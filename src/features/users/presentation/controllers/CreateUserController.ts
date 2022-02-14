@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { Controller } from "../../../../core/infra/contracts/Controller";
-import { CreateUserService } from "../../domain/services/CreateUserService";
+import { Request, Response } from 'express';
+import { Controller } from '../../../../core/infra/contracts/Controller';
+import { CreateUserService } from '../../domain/services/CreateUserService';
 
 export class CreateUserController implements Controller {
   constructor(private service: CreateUserService) {}
@@ -16,7 +16,7 @@ export class CreateUserController implements Controller {
         reppeatPassword,
       });
 
-      return res.json(newService);
+      return res.status(200).json(newService);
     } catch (error) {
       return res.send(error);
     }

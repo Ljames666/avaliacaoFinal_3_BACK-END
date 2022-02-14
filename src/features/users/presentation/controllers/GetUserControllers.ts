@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { Controller } from "../../../../core/infra/contracts/Controller";
-import { GetUserByIdService, GetUsersService } from "../../domain/services/GetUserServices";
+import { Request, Response } from 'express';
+import { Controller } from '../../../../core/infra/contracts/Controller';
+import { GetUserByIdService, GetUsersService } from '../../domain/services/GetUserServices';
 
 export class GetUsersController implements Controller {
   constructor(private service: GetUsersService) {}

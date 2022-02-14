@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { Controller } from "../../../../core/infra/contracts/Controller";
+import { Request, Response } from 'express';
+import { Controller } from '../../../../core/infra/contracts/Controller';
 
-import { UpdateUserService } from "../../domain/services/UpdateUserService";
+import { UpdateUserService } from '../../domain/services/UpdateUserService';
 
 export class UpdateUserController implements Controller {
   constructor(private updateService: UpdateUserService) {}
@@ -11,7 +11,7 @@ export class UpdateUserController implements Controller {
       const { name, username, email, password } = req.body;
 
       const service = await this.updateService.execute({ id, name, username, email, password });
-      return res.send(service);
+      return res.status(200).send(service);
     } catch (error) {
       return res.send(error);
     }
