@@ -1,8 +1,8 @@
-import { Repository } from "typeorm";
-import { DatabaseConnection } from "../../../../core/infra/database/connection/connection";
-import { TableUsers } from "../../../../core/infra/database/models/TableUsers";
-import { IUser } from "../../domain/interface/IUser";
-import { UserToTokenRequest } from "../../domain/interface/UserToTokenRequest";
+import { Repository } from 'typeorm';
+import { DatabaseConnection } from '../../../../core/infra/database/connection/connection';
+import { TableUsers } from '../../../../core/infra/database/models/TableUsers';
+import { IUser } from '../../domain/interface/IUser';
+import { UserToTokenRequest } from '../../domain/interface/UserToTokenRequest';
 
 export class UserRepository {
   private readonly repository: Repository<TableUsers>;
@@ -21,11 +21,11 @@ export class UserRepository {
   }
 
   async getById(id: string) {
-    const thisUser = await this.repository.find({
+    const thisUser = await this.repository.findOne({
       where: {
         id: id,
       },
-      relations: ["messages", "userLogon"],
+      relations: ['messages', 'userLogon'],
     });
 
     return thisUser;
