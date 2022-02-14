@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --silent --noStackTrace --runInBand -c ./jest.config.unit.ts",
-    "test:integration": "cross-env NODE_ENV=test jest --silent --noStackTrace --runInBand -c ./jest.config.integration.ts",
+    "test:integration": "cross-env NODE_ENV=test jest  --noStackTrace --runInBand -c ./jest.config.integration.ts",
     "test:all": "cross-env NODE_ENV=test jest --silent --noStackTrace --runInBand",
-    "test:setup": "rimraf ./dbtest.sqlite && rimraf ./tests/core/infra/database/migrations && cross-env NODE_ENV=test npm run typeorm migration:generate -- -n TestsMigration && cross-env NODE_ENV=test npm run typeorm migration:run",
+    "test:setup:migration": "rimraf ./tests/core/infra/database/migrations && cross-env NODE_ENV=test npm run typeorm migration:generate -- -n TestsMigration",
+    "test:setup": "rimraf ./dbtest.sqlite && cross-env NODE_ENV=test npm run typeorm migration:run",
     "test:coverage": "cross-env NODE_ENV=test jest --silent --noStackTrace --runInBand --coverage",
     "test:coverage:integration": "cross-env NODE_ENV=test jest --silent --noStackTrace --runInBand --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --silent --noStackTrace --runInBand --watchAll",
