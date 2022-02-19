@@ -1,8 +1,8 @@
-import { Repository } from "typeorm";
-import { DatabaseConnection } from "../../../../core/infra/database/connection/connection";
-import { TableMessages } from "../../../../core/infra/database/models/TableMessages";
-import { IMessage } from "../../domain/interfaces/IMessage";
-import { IMessageUpdateRequest } from "../../domain/interfaces/IMessageUpdateRequest";
+import { Equal, Repository } from 'typeorm';
+import { DatabaseConnection } from '../../../../core/infra/database/connection/connection';
+import { TableMessages } from '../../../../core/infra/database/models/TableMessages';
+import { IMessage } from '../../domain/interfaces/IMessage';
+import { IMessageUpdateRequest } from '../../domain/interfaces/IMessageUpdateRequest';
 
 export class MessageRepository {
   private repository: Repository<TableMessages>;
@@ -12,12 +12,6 @@ export class MessageRepository {
   }
 
   async messageCreate({ description, details, user_id }: IMessage) {
-    const descFind = await this.repository.findOne({ where: { description, user_id } });
-
-    if (descFind) {
-      throw new Error(`Message already exists`);
-    }
-
     const message = this.repository.create({ description, details, user_id });
 
     return await this.repository.save(message);
@@ -25,7 +19,7 @@ export class MessageRepository {
 
   async messagesFind() {
     const messages = await this.repository.find({
-      relations: ["users"],
+      relations: ['users'],
     });
 
     return messages;
@@ -38,10 +32,10 @@ export class MessageRepository {
   async messageFindById(user_id: string) {
     const messages = await this.repository.find({
       where: {
-        user_id: user_id,
+        user_id: Equal(user_id),
       },
-      order: { created_at: "ASC" },
-      relations: ["user"],
+      order: { created_at: 'ASC' },
+      relations: ['user'],
     });
 
     return messages;
@@ -66,7 +60,7 @@ export class MessageRepository {
 
   async messageDelete(id: string) {
     if (!(await this.repository.findOne(id))) {
-      throw new Error("Message does not exists");
+      throw new Error('Message does not exists');
     }
 
     await this.repository.delete(id);

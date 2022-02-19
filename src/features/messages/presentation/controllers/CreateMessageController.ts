@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { Controller } from "../../../../core/infra/contracts/Controller";
-import { CreateMessageService } from "../../domain/services/CreateMessageService";
+import { Request, Response } from 'express';
+import { Controller } from '../../../../core/infra/contracts/Controller';
+import { CreateMessageService } from '../../domain/services/CreateMessageService';
 
 export class CreateMessageController implements Controller {
   constructor(private service: CreateMessageService) {}
@@ -12,11 +12,9 @@ export class CreateMessageController implements Controller {
 
       const newService = await this.service.execute({ description, details, user_id });
 
-      return res.status(200).json(newService);
+      return res.status(200).send({ newService });
     } catch (error) {
-      if (error instanceof Error) {
-        return res.status(400).send(error.message);
-      }
+      if (error instanceof Error) return res.status(400).send({ message: error.message });
     }
   }
 }

@@ -59,6 +59,7 @@ export class UserRepository {
         password: data.password,
       },
     });
+    console.log(thisUser);
 
     const userToToken = { userLogon: thisUser.username, user_id: thisUser.id };
 

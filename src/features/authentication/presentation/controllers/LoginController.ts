@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { Controller } from "../../../../core/infra/contracts/Controller";
-import { LoginService } from "../../domain/services/LoginService";
+import { Request, Response } from 'express';
+import { Controller } from '../../../../core/infra/contracts/Controller';
+import { LoginService } from '../../domain/services/LoginService';
 
 export class LoginController implements Controller {
   constructor(private service: LoginService) {}
@@ -11,9 +11,9 @@ export class LoginController implements Controller {
 
       const result = await this.service.execute({ username, password });
 
-      return res.json(result);
+      return res.status(200).send({ result });
     } catch (error) {
-      return res.send({ error: error });
+      console.log(error);
     }
   }
 }

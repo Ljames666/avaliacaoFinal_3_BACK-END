@@ -1,26 +1,26 @@
-import { IService } from "../../../../core/domain/interface/IService";
-import { CacheRepository } from "../../../../core/infra/repositories/cacheRedis";
-import { MessageRepository } from "../../infra/repository/MessageRepository";
+import { IService } from '../../../../core/domain/interface/IService';
+import { CacheRepository } from '../../../../core/infra/repositories/cacheRedis';
+import { MessageRepository } from '../../infra/repository/MessageRepository';
 
-export class GetMessagesService implements IService {
-  constructor(private repository: MessageRepository, private cache: CacheRepository) {}
-  async execute() {
-    try {
-      const allCache = await this.cache.get(`messages:all`);
+// export class GetMessagesService implements IService {
+//   constructor(private repository: MessageRepository, private cache: CacheRepository) {}
+//   async execute() {
+//     try {
+//       const allCache = await this.cache.get(`messages:all`);
 
-      if (allCache) return allCache;
+//       if (allCache) return allCache;
 
-      const messagesAll = await this.repository.messagesFind();
+//       const messagesAll = await this.repository.messagesFind();
 
-      if (!messagesAll) throw new Error("not has messages!");
+//       if (!messagesAll) throw new Error("not has messages!");
 
-      await this.cache.set(`messages:all`, messagesAll);
-      return { ...messagesAll, cache: "ok" };
-    } catch (error) {
-      return error;
-    }
-  }
-}
+//       await this.cache.set(`messages:all`, messagesAll);
+//       return { ...messagesAll, cache: "ok" };
+//     } catch (error) {
+//       return error;
+//     }
+//   }
+// }
 
 export class GetMessageByIdService implements IService {
   constructor(private repository: MessageRepository, private cache: CacheRepository) {}
@@ -36,7 +36,7 @@ export class GetMessageByIdService implements IService {
 
       return thisMessage;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 }

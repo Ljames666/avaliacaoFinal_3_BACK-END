@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { Controller } from "../../../../core/infra/contracts/Controller";
-import { GetTokenService } from "../../domain/services/GetTokenService";
+import { Request, Response } from 'express';
+import { Controller } from '../../../../core/infra/contracts/Controller';
+import { GetTokenService } from '../../domain/services/GetTokenService';
 
 export class GetTokenController implements Controller {
   constructor(private service: GetTokenService) {}
@@ -10,9 +10,9 @@ export class GetTokenController implements Controller {
 
       const result = await this.service.execute(id);
 
-      return res.send(result);
+      return res.status(200).send(result);
     } catch (error) {
-      return res.send(error);
+      if (error instanceof Error) return res.status(404).send({ message: error.message });
     }
   }
 }

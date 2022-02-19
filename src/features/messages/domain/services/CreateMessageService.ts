@@ -1,16 +1,16 @@
-import { IService } from "../../../../core/domain/interface/IService";
-import { CacheRepository } from "../../../../core/infra/repositories/cacheRedis";
-import { MessageRepository } from "../../infra/repository/MessageRepository";
-import { IMessage } from "../interfaces/IMessage";
+import { ItIsError } from '../../../../core/domain/errors/it-is-error';
+import { IService } from '../../../../core/domain/interface/IService';
+import { TableMessages } from '../../../../core/infra/database/models/TableMessages';
+import { CacheRepository } from '../../../../core/infra/repositories/cacheRedis';
+import { MessageRepository } from '../../infra/repository/MessageRepository';
+import { IMessage } from '../interfaces/IMessage';
 
 export class CreateMessageService implements IService {
   constructor(private repository: MessageRepository, private cache: CacheRepository) {}
   async execute({ description, details, user_id }: IMessage) {
     try {
-      const descFind = await this.repository.findOneMessage({ where: { description, user_id } });
-
-      if (descFind) {
-        throw new Error(`Message already exists`);
+      if (await this.repository.findOneMessage({ description, user_id })) {
+        throw new ItIsError(`Message already exists`, 400);
       }
 
       const message = await this.repository.messageCreate({ description, details, user_id });
@@ -25,7 +25,7 @@ export class CreateMessageService implements IService {
 
       return message;
     } catch (error) {
-      if (error instanceof Error) return error.message;
+      throw error;
     }
   }
 }

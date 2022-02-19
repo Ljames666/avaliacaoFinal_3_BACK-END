@@ -1,7 +1,7 @@
-import { Equal, Repository } from "typeorm";
-import { DatabaseConnection } from "../../../../core/infra/database/connection/connection";
-import { TableToken } from "../../../../core/infra/database/models/TableToken";
-import { IToken } from "../../domain/interface/IToken";
+import { Equal, Repository } from 'typeorm';
+import { DatabaseConnection } from '../../../../core/infra/database/connection/connection';
+import { TableToken } from '../../../../core/infra/database/models/TableToken';
+import { IToken } from '../../domain/interface/IToken';
 
 export class TokenRepository {
   private repository: Repository<TableToken>;
@@ -14,16 +14,6 @@ export class TokenRepository {
     const logon = this.repository.create({ userLogon, user_id });
 
     return await this.repository.save(logon);
-  }
-
-  async tokenGet(id: string) {
-    const token = await this.repository.findOne({
-      where: {
-        user_id: Equal(id),
-      },
-    });
-
-    return token;
   }
 
   async findOneToken(id: string) {

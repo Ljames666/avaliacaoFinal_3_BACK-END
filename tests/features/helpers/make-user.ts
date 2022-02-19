@@ -3,9 +3,9 @@ import { UserRepository } from '../../../src/features/users/infra/repository/Use
 
 export const makeUser = async () => {
   const user = {
-    name: `jam-${v4}`,
-    username: `joy${v4}`,
-    email: `joy${v4}@teste.com`,
+    name: `jam-${v4()}`,
+    username: `joy${v4()}`,
+    email: `joy${v4()}@teste.com`,
     password: '123',
   };
   const repo = new UserRepository();

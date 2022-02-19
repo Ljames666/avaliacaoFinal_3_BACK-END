@@ -9,7 +9,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
   const authorization = await repository.findOne({ id: token });
 
   if (!token) {
-    return res.status(401).send({ message: "No token provided." });
+    return res.status(404).send({ message: "No token provided." });
   } else if (!authorization) {
     return res.status(401).send({ message: "Unauthenticated." });
   }

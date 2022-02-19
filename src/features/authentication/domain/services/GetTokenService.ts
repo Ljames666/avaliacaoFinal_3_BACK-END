@@ -1,11 +1,11 @@
-import { IService } from "../../../../core/domain/interface/IService";
-import { TokenRepository } from "../../infra/repository/TokenRepository";
+import { IService } from '../../../../core/domain/interface/IService';
+import { TokenRepository } from '../../infra/repository/TokenRepository';
 
 export class GetTokenService implements IService {
   constructor(private repository: TokenRepository) {}
   async execute(id: string) {
     try {
-      const activeToken = await this.repository.tokenGet(id);
+      const activeToken = await this.repository.findOneToken(id);
 
       if (!activeToken) {
         throw new Error(`Authorization is denied for ${id}`);

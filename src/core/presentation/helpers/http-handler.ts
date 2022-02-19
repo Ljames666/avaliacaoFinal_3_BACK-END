@@ -1,6 +1,6 @@
-import { Response } from "express";
-import { DomainError } from "../../domain/errors/domain-error";
-import { ControllerError } from "../errors/controller-error";
+import { Response } from 'express';
+import { ItIsError } from '../../domain/errors/it-is-error';
+import { ControllerError } from '../errors/controller-error';
 
 export const ok = (res: Response, data?: any) => {
   return res.status(200).send({
@@ -10,7 +10,7 @@ export const ok = (res: Response, data?: any) => {
 };
 
 export const serverError = (res: Response, error?: any) => {
-  if (error instanceof DomainError || error instanceof ControllerError) {
+  if (error instanceof ItIsError || error instanceof ControllerError) {
     return res.status(error.code).send({
       ok: false,
       error: error.message,
@@ -29,7 +29,7 @@ export const serverError = (res: Response, error?: any) => {
   return res.status(500).send({
     ok: false,
     error,
-    identifier: "unkwnown",
+    identifier: 'unkwnown',
   });
 };
 

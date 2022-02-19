@@ -3,3 +3,4 @@ dist
 .env
 coverage
 **.sqlite
+tests/core/infra/database/migrations/*.ts

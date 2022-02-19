@@ -1,5 +1,5 @@
-import { IService } from "../../../../core/domain/interface/IService";
-import { TokenRepository } from "../../infra/repository/TokenRepository";
+import { IService } from '../../../../core/domain/interface/IService';
+import { TokenRepository } from '../../infra/repository/TokenRepository';
 
 export class LogoffService implements IService {
   constructor(private repository: TokenRepository) {}
@@ -7,7 +7,7 @@ export class LogoffService implements IService {
     try {
       const token = await this.repository.findOneToken(id);
       if (!token) {
-        return new Error("User logoff");
+        throw new Error('User logoff');
       }
 
       const deleteTokenNow = await this.repository.tokenDelete(token.id);
