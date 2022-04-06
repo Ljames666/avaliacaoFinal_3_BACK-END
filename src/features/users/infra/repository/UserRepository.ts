@@ -61,8 +61,6 @@ export class UserRepository {
     });
     console.log(thisUser);
 
-    const userToToken = { userLogon: thisUser.username, user_id: thisUser.id };
-
-    return userToToken;
+    return thisUser;
   }
 }
