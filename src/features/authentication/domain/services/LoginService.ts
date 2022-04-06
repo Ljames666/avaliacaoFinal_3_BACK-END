@@ -16,8 +16,8 @@ export class LoginService implements IService {
 
       const userToToken = {
         role: 'user',
+        access_token: validateLogin.id,
         data: {
-          access_token: validateLogin.id,
           displayName: newLogin.name,
           photoURL: `https://avatars.dicebear.com/api/croodles-neutral/${newLogin.username}.svg`,
           email: newLogin.email,
