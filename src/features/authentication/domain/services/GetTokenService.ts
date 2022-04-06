@@ -12,13 +12,12 @@ export class GetTokenService implements IService {
         throw new Error(`Authorization is denied for ${id}`);
       }
       const userToToken = {
-        role: 'user',
+        role: 'admin',
         access_token: activeToken.id,
         data: {
           displayName: user.name,
           photoURL: `https://avatars.dicebear.com/api/croodles-neutral/${user.username}.svg`,
           email: user.email,
-          shortcuts: ['calendar', 'mail', 'contacts', 'todo'],
         },
         user: {
           id: user.id,
