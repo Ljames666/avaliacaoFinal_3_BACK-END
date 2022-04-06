@@ -23,7 +23,12 @@ export class LoginService implements IService {
           email: newLogin.email,
           shortcuts: ['calendar', 'mail', 'contacts', 'todo'],
         },
-        user: newLogin,
+        user: {
+          id: newLogin.id,
+          name: newLogin.name,
+          email: newLogin.email,
+          created_at: newLogin.created_at,
+        },
       };
 
       return userToToken;
