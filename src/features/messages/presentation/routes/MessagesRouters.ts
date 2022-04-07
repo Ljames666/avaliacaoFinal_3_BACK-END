@@ -42,7 +42,7 @@ export class MessageRoutes implements RouterContract {
 
     routerMessages.use(requestProprietary);
 
-    routerMessages.use('/', verifyToken);
+    // routerMessages.use('/', verifyToken);
 
     routerMessages.post('/:userId', (req: Request, res: Response) => {
       createMessageController.handle(req, res);
