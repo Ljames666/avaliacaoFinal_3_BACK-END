@@ -7,14 +7,15 @@ import {
   OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { v4 as uuid } from "uuid";
+} from 'typeorm';
+import { v4 as uuid } from 'uuid';
+import { TableContacts } from './TableContacts';
 
-import { TableMessages } from "./TableMessages";
-import { TableProfileUser } from "./TableProfileUser";
-import { TableToken } from "./TableToken";
+import { TableMessages } from './TableMessages';
+import { TableProfileUser } from './TableProfileUser';
+import { TableToken } from './TableToken';
 
-@Entity("users")
+@Entity('users')
 export class TableUsers {
   @PrimaryColumn()
   id: string;
@@ -45,6 +46,9 @@ export class TableUsers {
 
   @OneToMany(() => TableMessages, (message) => message.user)
   messages: Array<TableMessages>;
+
+  @OneToMany(() => TableContacts, (contact) => contact.user)
+  contacts: Array<TableContacts>;
 
   @BeforeInsert()
   beforeCreate() {

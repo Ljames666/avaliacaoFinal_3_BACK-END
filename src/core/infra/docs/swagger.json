@@ -1,0 +1,101 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ScrapBook Api",
+    "description": "This is the official documentation for used ScrapBook Api",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Jamerson Paz",
+      "email": "ljames666@gmail.com"
+    }
+  },
+  "paths": {
+    "/cadastro": {
+      "sumary": "Cadastro routes",
+      "get": {
+        "sumary": "List of user",
+        "description": "List of user by ID",
+        "tags": ["Cadastro"],
+        "parameters": [
+          {
+            "name": "filtes user by ID",
+            "in": "path",
+            "require": "true",
+            "example": "/cadastro/:id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "e264568c-75b4-4501-a465-2e766f2c7521",
+                  "name": "name of user",
+                  "username": "username",
+                  "email": "example@example.com",
+                  "password": "1234!Asd",
+                  "created_at": "Created date ",
+                  "updated_at": "updated date ",
+                  "messages": [],
+                  "userLogon": null
+                }
+              }
+            }
+          },
+
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "User already exists, please choose another one!"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Passwords don't match!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "register",
+        "description": "Register a new user",
+        "tags": ["Cadastro"],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "reppeatPassword": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

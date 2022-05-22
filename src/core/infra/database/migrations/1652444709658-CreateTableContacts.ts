@@ -1,27 +1,25 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateTableProfileUser1642187531196 implements MigrationInterface {
+export class CreateTableContacts1652444709658 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'profiles',
+        name: 'contacts',
 
         columns: [
           { name: 'id', type: 'uuid', isNullable: false, isPrimary: true },
 
           { name: 'avatarURL', type: 'varchar', length: '100' },
 
-          { name: 'address', type: 'varchar', length: '50', isNullable: false },
+          { name: 'name', type: 'varchar', length: '100', isNullable: false },
 
-          { name: 'state', type: 'varchar', length: '2', isNullable: false },
+          { name: 'email', type: 'varchar', length: '150', isNullable: false },
 
-          { name: 'country', type: 'varchar', length: '30', isNullable: false },
+          { name: 'address', type: 'json' },
 
-          { name: 'phoneNumber', type: 'varchar', length: '15', isNullable: false },
+          { name: 'phoneNumber', type: 'json' },
 
-          { name: 'occupation', type: 'varchar', length: '50', isNullable: false },
-
-          { name: 'about', type: 'varchar', length: '255', isNullable: false },
+          { name: 'description', type: 'varchar' },
 
           { name: 'user_id', type: 'uuid', isNullable: false },
 
@@ -31,7 +29,7 @@ export class CreateTableProfileUser1642187531196 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: 'Profile_user_fk',
+            name: 'Contacts_user_fk',
             columnNames: ['user_id'],
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
@@ -42,6 +40,6 @@ export class CreateTableProfileUser1642187531196 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('profiles');
+    await queryRunner.dropTable('contacts');
   }
 }

@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { makeRoutes } from './routes';
+import { setSwaggerUi } from '../infra/docs';
 
 export const createServer = () => {
   const app = express();
@@ -8,6 +9,8 @@ export const createServer = () => {
   app.use(cors());
 
   makeRoutes(app);
+
+  setSwaggerUi(app);
 
   return app;
 };
