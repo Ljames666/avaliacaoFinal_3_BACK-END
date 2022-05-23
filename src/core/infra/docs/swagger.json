@@ -346,6 +346,15 @@
     "/messages": {
       "post": {
         "tags": ["Messagens"]
+      },
+      "get": {
+        "tags": ["Messagens"]
+      },
+      "put": {
+        "tags": ["Messagens"]
+      },
+      "delete": {
+        "tags": ["Messagens"]
       }
     }
   }
