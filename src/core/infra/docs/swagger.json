@@ -323,10 +323,7 @@
             "description": "success",
             "content": {
               "application/json": {
-                "example": {
-                  "raw": [],
-                  "affected": 1
-                }
+                "example": {}
               }
             }
           },
@@ -335,7 +332,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "message": "User does not exist"
+                  "message": "User logoff"
                 }
               }
             }
@@ -345,16 +342,222 @@
     },
     "/messages": {
       "post": {
-        "tags": ["Messagens"]
+        "summary": "New message",
+        "description": "Add new message",
+        "tags": ["Messages"],
+        "parameters": [
+          {
+            "name": "Add new message for a specifier user",
+            "in": "path",
+            "require": "true",
+            "example": "/message/:userId"
+          }
+        ],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+
+                  "details": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "newService": {
+                    "description": "oi",
+                    "details": "teste",
+                    "user_id": "b5a5b1c0-0dba-43c8-8822-e387bb0e817c",
+                    "id": "32f39660-9416-401f-92bb-187e9865ed06",
+                    "updated_at": "2022-05-23T12:01:23.143Z",
+                    "created_at": "2022-05-23T12:01:23.143Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error sintax uuid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "invalid input syntax for type uuid: 8ef9e0e1-bb8d-4477-97c5-cb882b43dadfds"
+                }
+              }
+            }
+          }
+        }
       },
       "get": {
-        "tags": ["Messagens"]
+        "summary": "filter",
+        "description": "Filter all messages",
+        "tags": ["Messages"],
+        "parameters": [
+          {
+            "name": "filter all messages for a specifier user",
+            "in": "path",
+            "require": "true",
+            "example": "/message/:userId"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": "32f39660-9416-401f-92bb-187e9865ed06",
+                    "description": "oi",
+                    "details": "teste",
+                    "user_id": "b5a5b1c0-0dba-43c8-8822-e387bb0e817c",
+                    "created_at": "2022-05-23T12:01:23.143Z",
+                    "updated_at": "2022-05-23T12:01:23.143Z",
+                    "user": {
+                      "id": "b5a5b1c0-0dba-43c8-8822-e387bb0e817c",
+                      "name": "jamerson",
+                      "username": "Ljames",
+                      "email": "ljames666@gmail.com",
+                      "password": "1234!Asd",
+                      "created_at": "2022-05-23T00:26:17.248Z",
+                      "updated_at": "2022-05-23T00:26:17.248Z"
+                    }
+                  },
+                  {
+                    "id": "84025372-37a9-46aa-8a16-1a467820be9c",
+                    "description": "oite",
+                    "details": "teste",
+                    "user_id": "b5a5b1c0-0dba-43c8-8822-e387bb0e817c",
+                    "created_at": "2022-05-23T12:22:25.175Z",
+                    "updated_at": "2022-05-23T12:22:25.175Z",
+                    "user": {
+                      "id": "b5a5b1c0-0dba-43c8-8822-e387bb0e817c",
+                      "name": "jamerson",
+                      "username": "Ljames",
+                      "email": "ljames666@gmail.com",
+                      "password": "1234!Asd",
+                      "created_at": "2022-05-23T00:26:17.248Z",
+                      "updated_at": "2022-05-23T00:26:17.248Z"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Error sintax uuid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "invalid input syntax for type uuid: 8ef9e0e1-bb8d-4477-97c5-cb882b43dadfds"
+                }
+              }
+            }
+          }
+        }
       },
       "put": {
-        "tags": ["Messagens"]
+        "summary": "update",
+        "description": "Edit message",
+        "tags": ["Messages"],
+        "parameters": [
+          {
+            "name": "Edit message by ID",
+            "in": "path",
+            "require": "true",
+            "example": "/message/:id"
+          }
+        ],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+
+                  "details": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "serviceExecute": {
+                    "id": "32f39660-9416-401f-92bb-187e9865ed06",
+                    "description": "oitedes",
+                    "details": "teste12334",
+                    "user_id": "b5a5b1c0-0dba-43c8-8822-e387bb0e817c",
+                    "created_at": "2022-05-23T12:01:23.143Z",
+                    "updated_at": "2022-05-23T12:28:00.584Z"
+                  },
+                  "message": " message modified successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error sintax uuid",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "invalid input syntax for type uuid: 8ef9e0e1-bb8d-4477-97c5-cb882b43dadfds"
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
-        "tags": ["Messagens"]
+        "summary": "delete",
+        "description": "delete a message",
+        "tags": ["Messages"],
+        "parameters": [
+          {
+            "name": "delete message by ID",
+            "in": "path",
+            "require": "true",
+            "example": "/message/:id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "deleted!"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
