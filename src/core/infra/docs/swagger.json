@@ -44,20 +44,11 @@
             }
           },
 
-          "400": {
+          "404": {
             "content": {
               "application/json": {
                 "example": {
-                  "message": "User already exists, please choose another one!"
-                }
-              }
-            }
-          },
-          "401": {
-            "content": {
-              "application/json": {
-                "example": {
-                  "message": "Passwords don't match!"
+                  "message": "No user"
                 }
               }
             }
@@ -94,7 +85,267 @@
               }
             }
           }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "e264568c-75b4-4501-a465-2e766f2c7521",
+                  "name": "name of user",
+                  "username": "username",
+                  "email": "example@example.com",
+                  "password": "1234!Asd",
+                  "created_at": "Created date ",
+                  "updated_at": "updated date "
+                }
+              }
+            }
+          },
+
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "User already exists, please choose another one!"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Passwords don't match!"
+                }
+              }
+            }
+          }
         }
+      },
+      "put": {
+        "summary": "update",
+        "description": "Update an user",
+        "tags": ["Cadastro"],
+        "parameters": [
+          {
+            "name": "update user by ID",
+            "in": "path",
+            "require": "true",
+            "example": "/cadastro/:id"
+          }
+        ],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "e264568c-75b4-4501-a465-2e766f2c7521",
+                  "name": "name of user",
+                  "username": "username",
+                  "email": "example@example.com",
+                  "password": "1234!Asd",
+                  "created_at": "Created date ",
+                  "updated_at": "updated date "
+                }
+              }
+            }
+          },
+
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "user does not exist"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete",
+        "description": "Delete an user",
+        "tags": ["Cadastro"],
+        "parameters": [
+          {
+            "name": "delete user by ID",
+            "in": "path",
+            "require": "true",
+            "example": "/cadastro/:id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "raw": [],
+                  "affected": 1
+                }
+              }
+            }
+          },
+
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "User does not exist"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login",
+        "description": "Authentication",
+        "tags": ["Login"],
+        "requestBody": {
+          "required": "true",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "result": {
+                    "role": "admin",
+                    "access_token": "3b24c34a-6198-4e70-8335-67e212f0a562",
+                    "data": {
+                      "displayName": "jamerson",
+                      "photoURL": "https://avatars.dicebear.com/api/croodles-neutral/Ljames.svg",
+                      "email": "ljames666@gmail.com"
+                    },
+                    "user": {
+                      "id": "b5a5b1c0-0dba-43c8-8822-e387bb0e817c",
+                      "name": "jamerson",
+                      "email": "ljames666@gmail.com",
+                      "created_at": "2022-05-23T00:26:17.248Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "password does not exist, try again!"
+                }
+              }
+            }
+          },
+          "406": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "username does not exist, try again!"
+                }
+              }
+            }
+          },
+          "418": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "There is no way to return a null request"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Logoff",
+        "description": "logoff service account",
+        "tags": ["Login"],
+        "parameters": [
+          {
+            "name": "logoff service account user by ID",
+            "in": "path",
+            "require": "true",
+            "example": "/login/:id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "example": {
+                  "raw": [],
+                  "affected": 1
+                }
+              }
+            }
+          },
+
+          "404": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "User does not exist"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages": {
+      "post": {
+        "tags": ["Messagens"]
       }
     }
   }
